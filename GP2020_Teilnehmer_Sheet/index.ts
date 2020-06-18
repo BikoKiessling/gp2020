@@ -46,6 +46,7 @@ const getLatestAnswer = (): answer => {
 const onFormSubmit = (e) => {
   writeLatestAnswerToParticipantsSheet();
   updateParticipantItemListFromForm();
+  gp2020zeltenlib.updateCampingFormParticipantList();
 };
 
 const getParticipantRowIndex = (identifyingName: string) =>
