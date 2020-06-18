@@ -2,9 +2,9 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES5",
-    "lib": ["ES2017"],
+    "lib": ["ES6"],
 
     "sourceMap": true
   },
-  "exclude": ["../node_modules"]
+  "exclude": ["node_modules"]
 }
