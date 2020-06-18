@@ -1,0 +1,13 @@
+{
+  "timeZone": "Europe/Paris",
+  "dependencies": {
+    "libraries": [{
+      "userSymbol": "gp2020teilnehmerlib",
+      "libraryId": "1OOg7evZ1tycRr34DA9XxDqQBsQOC3noV_zDNG_nUmrtZ9DaE10PX2Hm7",
+      "version": "1",
+      "developmentMode": true
+    }]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}

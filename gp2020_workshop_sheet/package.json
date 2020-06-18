@@ -11,6 +11,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "husky": {
+    "hooks": {
+      "commit-msg": "npm run push"
+    }
+  },
   "dependencies": {
     "@types/google-apps-script": "^1.0.14",
     "prettier": "^2.0.5"
