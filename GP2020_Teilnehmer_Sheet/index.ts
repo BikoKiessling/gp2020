@@ -1,11 +1,15 @@
+import Item = GoogleAppsScript.Forms.Item;
+import ListItem = GoogleAppsScript.Forms.ListItem;
+
 const ITEM_TITLE = "Wer bist du?";
 
+const PARTICIPANT_SPREADHSEET_ID = "1I-Vuv7KM4FhRSB7gVFSyYgeoDOgiQW-1idDK40k-Rro";
 const ss = SpreadsheetApp.open(
-  DriveApp.getFileById("1I-Vuv7KM4FhRSB7gVFSyYgeoDOgiQW-1idDK40k-Rro")
+  DriveApp.getFileById(PARTICIPANT_SPREADHSEET_ID)
 );
 const form = FormApp.openByUrl(ss.getFormUrl());
 
-let PARTICIPANTS_SHEET_NAME = "Teilnehmer";
+const PARTICIPANTS_SHEET_NAME = "Teilnehmer";
 const PARTICPANTIS_SHEET_DATARANGE = `A2:E`;
 const participantsSheet = ss.getSheetByName(PARTICIPANTS_SHEET_NAME);
 
@@ -38,6 +42,7 @@ const getLatestAnswer = (): answer => {
   return answers[answers.length - 1];
 };
 
+//central hook
 const onFormSubmit = (e) => {
   writeLatestAnswerToParticipantsSheet();
   updateParticipantItemListFromForm();
@@ -50,11 +55,13 @@ const getParticipantRowIndex = (identifyingName: string) =>
 
 //if the nickname already exists, append identifyingName to avoid duplicate names
 const getValidNickname = (answer: answer): string =>
-  getFormattedAnswers().find(
-    (formattedAnswer) => formattedAnswer.nickname === answer.nickname
-  )
-    ? `${answer.nickname}(${answer.name})`
-    : answer.nickname;
+  answer.nickname
+      ? getFormattedAnswers().find(
+          (formattedAnswer) => formattedAnswer.nickname === answer.nickname
+        )
+        ? `${answer.nickname}(${answer.name})`
+      : answer.nickname
+    : answer.name;
 
 const writeLatestAnswerToParticipantsSheet = () => {
   const latestAnswer = getLatestAnswer();
@@ -83,7 +90,7 @@ const getIdentifyingParticipantNames = (): any[] => {
 
 const getFormattedAnswers = () =>
   participantsSheet
-    .getRange(PARTICIPANTS_SHEET_DATARANGE)
+    .getRange(PARTICPANTIS_SHEET_DATARANGE)
     .getValues()
     .map(toFormattedAnswer)
     .filter((answer) => answer.name);
@@ -103,15 +110,15 @@ const toFormattedAnswer = ([
   relativeAlcoholconsumption,
 });
 
-const getParticipantListItemIndex = (): number =>
-  form.getItems().findIndex((item: Item) => item.getTitle() === ITEM_TITLE);
-
-//participant list has to be created manually before with name of const ITEM_TITLE and type dropdown
-const updateParticipantItemListFromForm = () => {
-  const listItem = form
+const getParticipantListItem = (): ListItem =>
+  form
     .getItems()
     .find((item: Item) => item.getTitle() === ITEM_TITLE)
     .asListItem();
+
+//participant list has to be created manually before with name of const ITEM_TITLE and type dropdown
+const updateParticipantItemListFromForm = () => {
+  const listItem = getParticipantListItem();
 
   listItem.setRequired(true);
   listItem.setChoices(
@@ -120,3 +127,5 @@ const updateParticipantItemListFromForm = () => {
       .map((answer) => listItem.createChoice(answer.name))
   );
 };
+
+const getNotYetAnsweredNicknames = () => {};
