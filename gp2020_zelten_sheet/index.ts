@@ -31,33 +31,10 @@ const ANSWERS_SHEET_DATARANGE = "B2:D";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
 const onFormSubmit = (e) => {
-  writeLatestAnswerToCampingSheet();
+  gp2020teilnehmerlib.onUpdateParticipantListChanged(form);
+  gp2020teilnehmerlib.onUpdateParticipantListChanged(form);
   updateParticipantItemListFromForm();
 };
-
-const participantsThatHaveNotYetSubmitted = (nickname: string) =>
-  !getFormattedAnswers().some(
-    (formattedAnswer) => formattedAnswer.nickname === nickname
-  );
-
-//participant list has to be created manually before with name of const ITEM_TITLE and type dropdown
-const updateParticipantItemListFromForm = () => {
-  const listItem = getParticipantListItem();
-
-  listItem.setRequired(true);
-  const nicknames = gp2020teilnehmerlib.getNicknames() as string[];
-  listItem.setChoices(
-    nicknames
-      .filter(participantsThatHaveNotYetSubmitted)
-      .map((nickname) => listItem.createChoice(nickname))
-  );
-};
-
-const getParticipantListItem = (): ListItem =>
-  form
-    .getItems()
-    .find((item: Item) => item.getTitle() === ITEM_TITLE)
-    .asListItem();
 
 const toAnswer = ([nickname, type, places]): answer => ({
   nickname,
@@ -70,6 +47,7 @@ const getAnswers = (): answer[] =>
     .getValues()
     .map(toAnswer)
     .filter((answer) => answer.type);
+
 const getLatestAnswer = (): answer => {
   const answers = getAnswers();
   return answers[answers.length - 1];
@@ -102,4 +80,3 @@ const getFormattedAnswers = () =>
     .getValues()
     .map(toFormattedAnswer)
     .filter((formattedAnswer) => formattedAnswer.type);
-const getNextRowIndex = (): number => getFormattedAnswers().length + 2;
