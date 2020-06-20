@@ -3,9 +3,13 @@ import ListItem = GoogleAppsScript.Forms.ListItem;
 import Item = GoogleAppsScript.Forms.Item;
 import * as gp2020teilnehmerlib from "../gp2020_teilnehmer_lib";
 
+class alreadyAnsweredParticipants {
+  identifyingProperty: string;
+  alreadyAnsweredParticipants: string[];
+}
 class UpdateParticipantListOptions {
   onlyOneAnswerPerParticipantPolicy: boolean;
-  alreadyAnsweredParticipants: string[];
+  alreadyAnsweredParticipants: alreadyAnsweredParticipants;
 }
 class ObservingForm {
   form: Form;
@@ -19,18 +23,38 @@ const onParticipantListChanged = () => {
   observingForms.forEach(updateParticipantItemListOfForm);
 };
 
+const getDataList = (observingForm: ObservingForm) => {
+  switch (
+    observingForm.options.alreadyAnsweredParticipants.identifyingProperty
+  ) {
+    case "name":
+      return gp2020teilnehmerlib.getNames();
+    case "nickname":
+      return gp2020teilnehmerlib.getNicknames();
+    default:
+      throw Error("invalid identifyingProperty");
+  }
+};
 const updateParticipantItemListOfForm = (observingForm: ObservingForm) => {
   const listItem = getParticipantListItem(observingForm.form);
 
   listItem.setRequired(true);
+  let dataList = getDataList(observingForm);
+  Logger.log(
+      'datalist:',
+    dataList,
+    'alreadyAnswered:',
+    observingForm.options.alreadyAnsweredParticipants
+      .alreadyAnsweredParticipants
+  );
   listItem.setChoices(
-    gp2020teilnehmerlib
-      .getNicknames()
-      .filter((currentNickname) =>
+    dataList
+      .filter((currentIdentifier) =>
         observingForm.options.onlyOneAnswerPerParticipantPolicy
           ? participantHasNotYetSubmitted(
-              currentNickname,
+              currentIdentifier,
               observingForm.options.alreadyAnsweredParticipants
+                .alreadyAnsweredParticipants
             )
           : true
       )
@@ -39,12 +63,9 @@ const updateParticipantItemListOfForm = (observingForm: ObservingForm) => {
 };
 
 const participantHasNotYetSubmitted = (
-  nickname: string,
+  name: string,
   alreadyAnsweredParticipants: string[]
-) =>
-  !alreadyAnsweredParticipants.some(
-    (currentNickname) => currentNickname === nickname
-  );
+) => !alreadyAnsweredParticipants.some((identifier) => identifier === name);
 
 const getParticipantListItem = (form: Form): ListItem =>
   form

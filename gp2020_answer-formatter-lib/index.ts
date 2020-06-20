@@ -1,13 +1,19 @@
 import Sheet = GoogleAppsScript.Spreadsheet.Sheet;
 
-type insertRowPolicy = "next" | "byColumnValue";
+class insertRowPolicy {
+  type: "next" | "byColumnValue";
+  answerProperty: string;
+}
+
+type identifyingProperty = "name" | "nickname";
 class FormatAnswerOptions {
   answerSheetDataRange: string;
   targetSheetDataRange: string;
   filterUndefinedByProperty: string;
-  nickNameProperty: string;
+  identifyingProperty: identifyingProperty;
   insertRowPolicy: insertRowPolicy;
-  toFormattedAnswer: (fields: string[]) => any;
+  nrOfAnswerProperties: number;
+  toFormattedAnswer: (fields: string[], answerRows: any[][]) => any;
 }
 export class FormatAnswer {
   answerSheet: Sheet;
@@ -28,39 +34,44 @@ export class FormatAnswer {
     const latestAnswer = this.getLatestAnswer();
     const rowIndex = this.getRowIndex(latestAnswer);
     this.targetSheet
-      .getRange(`A${rowIndex}:C${rowIndex}`)
+      .getRange(
+        `A${rowIndex}:${String.fromCharCode(
+          this.options.nrOfAnswerProperties + 64
+        )}${rowIndex}`
+      )
       .setValues([Object.values(latestAnswer)]);
   }
 
   getRowIndex(latestAnswer) {
-    switch (this.options.insertRowPolicy) {
+    switch (this.options.insertRowPolicy.type) {
       case "byColumnValue":
-        this.getRowIndexByFirstColumnValue(
-          latestAnswer[this.options.nickNameProperty]
+        return this.getRowIndexByFirstColumnValue(
+          latestAnswer[this.options.insertRowPolicy.answerProperty]
         );
-        break;
       case "next":
-        this.getNextRowIndex();
-        break;
+        return this.getNextRowIndex();
       default:
         throw Error("invalid insertRowPolicy");
     }
   }
-  getAnsweredParticipantNicknames(): string[] {
-    let formattedAnswers = this.getFormattedAnswers();
 
+  getAnsweredParticipantsByIdentifyingProperty(): string[] {
+    let formattedAnswers = this.getFormattedAnswers();
     return formattedAnswers.map(
-      (formattedAnswer) => formattedAnswer[this.options.nickNameProperty]
+      (formattedAnswer) => formattedAnswer[this.options.identifyingProperty]
     );
   }
 
-  private getFormattedAnswers() {
-    let values = this.targetSheet
+  private getFormattedAnswerRows() {
+    return this.targetSheet
       .getRange(this.options.targetSheetDataRange)
       .getValues();
+  }
 
-    return values
-      .map(this.options.toFormattedAnswer)
+  private getFormattedAnswers() {
+    const formattedAnswerRows = this.getFormattedAnswerRows();
+    return formattedAnswerRows
+      .map((row) => this.options.toFormattedAnswer(row, formattedAnswerRows))
       .filter(
         (formattedAnswer) =>
           formattedAnswer[this.options.filterUndefinedByProperty]
@@ -71,8 +82,10 @@ export class FormatAnswer {
     return this.answerSheet
       .getRange(this.options.answerSheetDataRange)
       .getValues()
-      .map(this.options.toFormattedAnswer)
-      .filter((answer) => answer.type);
+      .map((row) =>
+        this.options.toFormattedAnswer(row, this.getFormattedAnswerRows())
+      )
+      .filter((answer) => answer[this.options.filterUndefinedByProperty]);
   }
 
   private getLatestAnswer(): any {
@@ -92,7 +105,8 @@ export class FormatAnswer {
       .filter((value) => value);
   }
 
-  getRowIndexByFirstColumnValue = (firstColumnValue: string): number =>
-    this.getFirstColumnValues().findIndex((name) => name === firstColumnValue) +
-    2;
+  getRowIndexByFirstColumnValue = (firstColumnValue: string): number => {
+    const value = this.getFirstColumnValues();
+    return value.findIndex((name) => name === firstColumnValue) + 2;
+  };
 }

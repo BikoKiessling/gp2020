@@ -7,11 +7,19 @@ const ss = SpreadsheetApp.open(
 
 const PARTICIPANTS_SHEET_NAME = "Teilnehmer";
 const PARTICPANTIS_SHEET_NICKNAME_DATARANGE = `B2:B`;
+const PARTICPANTIS_SHEET_NAME_DATARANGE = `A2:A`;
 const participantsSheet = ss.getSheetByName(PARTICIPANTS_SHEET_NAME);
 
-export const getNicknames = (): string[] =>
+const getNicknames = (): string[] =>
   participantsSheet
     .getRange(PARTICPANTIS_SHEET_NICKNAME_DATARANGE)
     .getValues()
     .map(([nickname]) => nickname)
     .filter((nickname) => nickname);
+
+const getNames = (): string[] =>
+  participantsSheet
+    .getRange(PARTICPANTIS_SHEET_NAME_DATARANGE)
+    .getValues()
+    .map(([name]) => name)
+    .filter((name) => name);
