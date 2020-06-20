@@ -36,19 +36,17 @@ const ANSWERS_SHEET_DATARANGE = "B2:D";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
 const onFormSubmit = (e) => {
-  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,campingSheet,{toAnswer,toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: CAMPING_SHEET_DATARANGE,filterUndefinedByProperty: "type", nickNameProperty: "nickname"});
+  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,campingSheet,{toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: CAMPING_SHEET_DATARANGE,filterUndefinedByProperty: "type", nickNameProperty: "nickname", insertRowPolicy: 'next'});
   const alreadyAnsweredParticipants = formatAnswer.getAnsweredParticipantNicknames();
+  formatAnswer.writeFormattedAnswerToSheet();
   gp2020updateparticipantlistlib.updateParticipantItemListOfForm({form,options: {alreadyAnsweredParticipants,onlyOneAnswerPerParticipantPolicy: true,}});
 };
 
-const toAnswer = ([nickname, type, places]): answer => ({
-  nickname,
-  type,
-  places,
-});
-
-const toFormattedAnswer = ([nickname, type, places]): formattedAnswer => ({
-  nickname,
-  type: Object.keys(CAMPING_SELECTION).find(key => CAMPING_SELECTION[key] === type),
-  places,
-});
+const toFormattedAnswer = ([nickname, type, places]): formattedAnswer => {
+  const keys = Object.keys(CAMPING_SELECTION);
+  return {
+    nickname,
+    type: keys.some(key => key === type) ? type : keys.find(key => CAMPING_SELECTION[key] === type ),
+    places,
+  }
+};

@@ -4,11 +4,13 @@
     "libraries": [{
       "userSymbol": "gp2020updateparticipantlistlib",
       "libraryId": "1hRuJFCH78neHQ_F0m9Ep1VEMUpszCxzYXZ1D2jXL--oZPLq-1gKhUQSz",
-      "version": "2"
+      "version": "3",
+      "developmentMode": true
     }, {
       "userSymbol": "gp2020answerformatterlib",
       "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
-      "version": "1"
+      "version": "5",
+      "developmentMode": true
     }]
   },
   "exceptionLogging": "STACKDRIVER",

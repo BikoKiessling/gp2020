@@ -2,6 +2,7 @@ import Form = GoogleAppsScript.Forms.Form;
 import ListItem = GoogleAppsScript.Forms.ListItem;
 import Item = GoogleAppsScript.Forms.Item;
 import * as gp2020teilnehmerlib from "../gp2020_teilnehmer_lib";
+
 class UpdateParticipantListOptions {
   onlyOneAnswerPerParticipantPolicy: boolean;
   alreadyAnsweredParticipants: string[];
@@ -14,13 +15,11 @@ class ObservingForm {
 const observingForms: ObservingForm[] = [];
 const ITEM_TITLE = "Wer bist du?";
 
-export const onParticipantListChanged = () => {
+const onParticipantListChanged = () => {
   observingForms.forEach(updateParticipantItemListOfForm);
 };
 
-export const updateParticipantItemListOfForm = (
-  observingForm: ObservingForm
-) => {
+const updateParticipantItemListOfForm = (observingForm: ObservingForm) => {
   const listItem = getParticipantListItem(observingForm.form);
 
   listItem.setRequired(true);
