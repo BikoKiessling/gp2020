@@ -35,11 +35,6 @@ const ANSWERS_SHEET_NAME = "form";
 const ANSWERS_SHEET_DATARANGE = "B2:D";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
-const onFormSubmit = (e) => {
-  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,campingSheet,{toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: CAMPING_SHEET_DATARANGE,filterUndefinedByProperty: "type", identifyingProperty: "nickname", insertRowPolicy: {type: 'next'}, nrOfAnswerProperties: 3});
-  formatAnswer.writeFormattedAnswerToSheet();
-  gp2020updateparticipantlistlib.updateParticipantItemListOfForm({form,options: {alreadyAnsweredParticipants: {alreadyAnsweredParticipants: formatAnswer.getAnsweredParticipantsByIdentifyingProperty(), identifyingProperty: 'nickname'},onlyOneAnswerPerParticipantPolicy: true,}});
-};
 
 const toFormattedAnswer = ([nickname, type, places]): formattedAnswer => {
   const keys = Object.keys(CAMPING_SELECTION);
@@ -48,4 +43,19 @@ const toFormattedAnswer = ([nickname, type, places]): formattedAnswer => {
     type: keys.some(key => key === type) ? type : keys.find(key => CAMPING_SELECTION[key] === type ),
     places,
   }
+
 };
+
+const globalConfig = {toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: CAMPING_SHEET_DATARANGE,filterUndefinedByProperty: "type", identifyingProperty: "nickname", insertRowPolicy: {type: 'next'}, nrOfAnswerProperties: 3};
+
+const onFormSubmit = (e) => {
+  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,campingSheet,globalConfig);
+  formatAnswer.writeFormattedAnswerToSheet();
+  updateParticipantList();
+};
+
+const updateParticipantList = () =>{
+  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,campingSheet,globalConfig);
+  gp2020updateparticipantlistlib.updateParticipantItemListOfForm({form,options: {alreadyAnsweredParticipants: {alreadyAnsweredParticipants: formatAnswer.getAnsweredParticipantsByIdentifyingProperty(), identifyingProperty: 'nickname'},onlyOneAnswerPerParticipantPolicy: true,}});
+}
+

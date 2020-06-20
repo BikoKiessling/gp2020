@@ -19,10 +19,6 @@ class ObservingForm {
 const observingForms: ObservingForm[] = [];
 const ITEM_TITLE = "Wer bist du?";
 
-const onParticipantListChanged = () => {
-  observingForms.forEach(updateParticipantItemListOfForm);
-};
-
 const getDataList = (observingForm: ObservingForm) => {
   switch (
     observingForm.options.alreadyAnsweredParticipants.identifyingProperty

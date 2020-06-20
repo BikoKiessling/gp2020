@@ -17,84 +17,24 @@ let ANSWERS_SHEET_NAME = "form";
 const ANSWERS_SHEET_DATARANGE = "B2:F";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
-const toAnswer = ([
-  nickname,
-  nightCount,
-  dayOfArrival,
-  relativeAlcoholconsumption,
-  name,
-]): answer => ({
-  name,
-  nickname,
-  dayOfArrival,
-  nightCount,
-  relativeAlcoholconsumption,
-});
-
-const getAnswers = (): answer[] => {
-  const answersTable = answersSheet
-    .getRange(ANSWERS_SHEET_DATARANGE)
-    .getValues();
-  return answersTable.map(toAnswer).filter((answer) => answer.dayOfArrival);
-};
-const getLatestAnswer = (): answer => {
-  const answers = getAnswers();
-  return answers[answers.length - 1];
-};
-
 //central hook
 const onFormSubmit = (e) => {
-  writeLatestAnswerToParticipantsSheet();
-  updateParticipantItemListFromForm();
-  gp2020zeltenlib.updateCampingFormParticipantList();
-};
+  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,participantsSheet,{toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: PARTICPANTIS_SHEET_DATARANGE,filterUndefinedByProperty: "dayOfArrival", identifyingProperty: "name", insertRowPolicy: {type: 'byColumnValue', answerProperty: 'name'},nrOfAnswerProperties: 5});
+  formatAnswer.writeFormattedAnswerToSheet();
+  gp2020updateparticipantlistlib.updateParticipantItemListOfForm({form,options: {alreadyAnsweredParticipants: {alreadyAnsweredParticipants: formatAnswer.getAnsweredParticipantsByIdentifyingProperty(), identifyingProperty: 'name'},onlyOneAnswerPerParticipantPolicy: true,}});
+  gp2020zeltensheet.updateParticipantList();
 
-const getParticipantRowIndex = (identifyingName: string) =>
-  getIdentifyingParticipantNames().findIndex(
-    ([name]) => name === identifyingName
-  ) + 2;
+};
 
 //if the nickname already exists, append identifyingName to avoid duplicate names
-const getValidNickname = (answer: answer): string =>
-  answer.nickname
-      ? getFormattedAnswers().find(
-          (formattedAnswer) => formattedAnswer.nickname === answer.nickname
+const getValidNickname = (name: string,nickname: string, answers: any[][]): string =>
+  nickname
+      ? answers.find(
+          (answerRow) => answerRow[1] === nickname
         )
-        ? `${answer.nickname}(${answer.name})`
-      : answer.nickname
-    : answer.name;
-
-const writeLatestAnswerToParticipantsSheet = () => {
-  const latestAnswer = getLatestAnswer();
-
-  latestAnswer.nickname = getValidNickname(latestAnswer);
-
-  // + 2 because it starts at A2
-  const participantRowIndex = getParticipantRowIndex(latestAnswer.name);
-
-  participantsSheet
-    .getRange(`B${participantRowIndex}:E${participantRowIndex}`)
-    .setValues([
-      [
-        latestAnswer.nickname,
-        latestAnswer.dayOfArrival,
-        latestAnswer.nightCount,
-        latestAnswer.relativeAlcoholconsumption,
-      ],
-    ]);
-};
-
-const getIdentifyingParticipantNames = (): any[] => {
-  let values = participantsSheet.getRange("A2:A").getValues();
-  return values.filter(([name]) => name);
-};
-
-const getFormattedAnswers = () =>
-  participantsSheet
-    .getRange(PARTICPANTIS_SHEET_DATARANGE)
-    .getValues()
-    .map(toFormattedAnswer)
-    .filter((answer) => answer.name);
+        ? `${nickname} (${name})`
+      : nickname
+    : name;
 
 //formatted answers are those saved in the 'Teilnehmer' sheet
 const toFormattedAnswer = ([
@@ -103,30 +43,12 @@ const toFormattedAnswer = ([
   dayOfArrival,
   nightCount,
   relativeAlcoholconsumption,
-]): answer => ({
-  name,
-  nickname,
-  dayOfArrival,
-  nightCount,
-  relativeAlcoholconsumption,
-});
-
-const getParticipantListItem = (): ListItem =>
-  form
-    .getItems()
-    .find((item: Item) => item.getTitle() === ITEM_TITLE)
-    .asListItem();
-
-//participant list has to be created manually before with name of const ITEM_TITLE and type dropdown
-const updateParticipantItemListFromForm = () => {
-  const listItem = getParticipantListItem();
-
-  listItem.setRequired(true);
-  listItem.setChoices(
-    getFormattedAnswers()
-      .filter((answer) => !answer.dayOfArrival)
-      .map((answer) => listItem.createChoice(answer.name))
-  );
+], answers: any[][]): answer => {
+  return {
+    name,
+    nickname: getValidNickname(name, nickname, answers),
+    dayOfArrival,
+    nightCount,
+    relativeAlcoholconsumption,
+  }
 };
-
-const getNotYetAnsweredNicknames = () => {};
