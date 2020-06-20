@@ -1,45 +1,32 @@
 import Form = GoogleAppsScript.Forms.Form;
 import ListItem = GoogleAppsScript.Forms.ListItem;
 import Item = GoogleAppsScript.Forms.Item;
-
+import * as gp2020teilnehmerlib from "../gp2020_teilnehmer_lib";
 class UpdateParticipantListOptions {
   onlyOneAnswerPerParticipantPolicy: boolean;
   alreadyAnsweredParticipants: string[];
 }
-
 class ObservingForm {
   form: Form;
   options: UpdateParticipantListOptions;
 }
+
 const observingForms: ObservingForm[] = [];
 const ITEM_TITLE = "Wer bist du?";
 
-const onParticipantsListChanged = () => {
+export const onParticipantListChanged = () => {
   observingForms.forEach(updateParticipantItemListOfForm);
 };
 
-const notifyOnParticipantListChanged = (
-  form: Form,
-  options: UpdateParticipantListOptions
+export const updateParticipantItemListOfForm = (
+  observingForm: ObservingForm
 ) => {
-  observingForms.push({ form, options });
-};
-
-const participantHasNotYetSubmitted = (
-  nickname: string,
-  alreadyAnsweredParticipants: string[]
-) =>
-  !alreadyAnsweredParticipants.some(
-    (currentNickname) => currentNickname === nickname
-  );
-
-const updateParticipantItemListOfForm = (observingForm: ObservingForm) => {
   const listItem = getParticipantListItem(observingForm.form);
 
   listItem.setRequired(true);
-  const nicknames = gp2020teilnehmerlib.getNicknames() as string[];
   listItem.setChoices(
-    nicknames
+    gp2020teilnehmerlib
+      .getNicknames()
       .filter((currentNickname) =>
         observingForm.options.onlyOneAnswerPerParticipantPolicy
           ? participantHasNotYetSubmitted(
@@ -51,6 +38,14 @@ const updateParticipantItemListOfForm = (observingForm: ObservingForm) => {
       .map((nickname) => listItem.createChoice(nickname))
   );
 };
+
+const participantHasNotYetSubmitted = (
+  nickname: string,
+  alreadyAnsweredParticipants: string[]
+) =>
+  !alreadyAnsweredParticipants.some(
+    (currentNickname) => currentNickname === nickname
+  );
 
 const getParticipantListItem = (form: Form): ListItem =>
   form

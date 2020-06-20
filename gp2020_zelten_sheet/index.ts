@@ -1,5 +1,5 @@
-import ListItem = GoogleAppsScript.Forms.ListItem;
-import Item = GoogleAppsScript.Forms.Item;
+import * as gp2020updateparticipantlistlib from '../gp2020_update-participant-list_lib';
+import * as gp2020answerformatterlib from "../gp2020_answer-formatter-lib";
 
 enum CAMPING_SELECTION {
   TENT = "Habe ein Zelt",
@@ -14,7 +14,12 @@ class answer {
   places?: number;
 }
 
-const ITEM_TITLE = "Wer bist du?";
+class formattedAnswer{
+  nickname: string;
+  type: string;
+  places?: number;
+}
+
 
 const ss = SpreadsheetApp.open(
   DriveApp.getFileById("1JdP2tqC3TSpuZJ1gsEftjfgV00a1iU6Y1AZHTsnEjAc")
@@ -31,9 +36,9 @@ const ANSWERS_SHEET_DATARANGE = "B2:D";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
 const onFormSubmit = (e) => {
-  gp2020teilnehmerlib.onUpdateParticipantListChanged(form);
-  gp2020teilnehmerlib.onUpdateParticipantListChanged(form);
-  updateParticipantItemListFromForm();
+  const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,campingSheet,{toAnswer,toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: CAMPING_SHEET_DATARANGE,filterUndefinedByProperty: "type", nickNameProperty: "nickname"});
+  const alreadyAnsweredParticipants = formatAnswer.getAnsweredParticipantNicknames();
+  gp2020updateparticipantlistlib.updateParticipantItemListOfForm({form,options: {alreadyAnsweredParticipants,onlyOneAnswerPerParticipantPolicy: true,}});
 };
 
 const toAnswer = ([nickname, type, places]): answer => ({
@@ -41,42 +46,9 @@ const toAnswer = ([nickname, type, places]): answer => ({
   type,
   places,
 });
-const getAnswers = (): answer[] =>
-  answersSheet
-    .getRange(ANSWERS_SHEET_DATARANGE)
-    .getValues()
-    .map(toAnswer)
-    .filter((answer) => answer.type);
 
-const getLatestAnswer = (): answer => {
-  const answers = getAnswers();
-  return answers[answers.length - 1];
-};
-
-const writeLatestAnswerToCampingSheet = () => {
-  const latestAnswer = getLatestAnswer();
-  campingSheet
-    .getRange(`A${getNextRowIndex()}:C${getNextRowIndex()}`)
-    .setValues([
-      [
-        latestAnswer.nickname,
-        Object.keys(CAMPING_SELECTION).find(
-          (key) => CAMPING_SELECTION[key] === latestAnswer.type
-        ),
-        latestAnswer.places,
-      ],
-    ]);
-};
-
-const toFormattedAnswer = ([nickname, type, places]): answer => ({
+const toFormattedAnswer = ([nickname, type, places]): formattedAnswer => ({
   nickname,
-  type,
+  type: Object.keys(CAMPING_SELECTION).find(key => CAMPING_SELECTION[key] === type),
   places,
 });
-
-const getFormattedAnswers = () =>
-  campingSheet
-    .getRange(CAMPING_SHEET_DATARANGE)
-    .getValues()
-    .map(toFormattedAnswer)
-    .filter((formattedAnswer) => formattedAnswer.type);

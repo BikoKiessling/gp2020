@@ -9,7 +9,7 @@ const PARTICIPANTS_SHEET_NAME = "Teilnehmer";
 const PARTICPANTIS_SHEET_NICKNAME_DATARANGE = `B2:B`;
 const participantsSheet = ss.getSheetByName(PARTICIPANTS_SHEET_NAME);
 
-const getNicknames = (): string[] =>
+export const getNicknames = (): string[] =>
   participantsSheet
     .getRange(PARTICPANTIS_SHEET_NICKNAME_DATARANGE)
     .getValues()

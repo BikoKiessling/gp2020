@@ -4,10 +4,11 @@ class FormatAnswerOptions {
   answerSheetDataRange: string;
   targetSheetDataRange: string;
   filterUndefinedByProperty: string;
-  toFormattedAnswer: () => any;
-  toAnswer: () => any;
+  nickNameProperty: string;
+  toFormattedAnswer: (fields: string[]) => any;
+  toAnswer: (fields: string[]) => any;
 }
-class FormatAnswer {
+export class FormatAnswer {
   answerSheet: Sheet;
   targetSheet: Sheet;
   options: FormatAnswerOptions;
@@ -27,6 +28,12 @@ class FormatAnswer {
     this.targetSheet
       .getRange(`A${this.getNextRowIndex()}:C${this.getNextRowIndex()}`)
       .setValues([[Object.values(latestAnswer)]]);
+  }
+
+  getAnsweredParticipantNicknames(): string[] {
+    return this.getFormattedAnswers().map(
+      (formattedAnswer) => formattedAnswer[this.options.nickNameProperty]
+    );
   }
 
   private getFormattedAnswers() {
