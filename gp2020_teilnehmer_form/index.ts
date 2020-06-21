@@ -62,7 +62,7 @@ const toFormattedAnswer = (
 ): answer => {
   return {
     name,
-    nickname: `${nickname} (${name})`,
+    nickname: nickname ? `${nickname} (${name})` : name,
     dayOfArrival,
     nightCount,
     relativeAlcoholconsumption,

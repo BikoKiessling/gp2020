@@ -29,11 +29,14 @@ const ANSWERS_SHEET_NAME = "form";
 const ANSWERS_SHEET_DATARANGE = "B2:D";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
-const toFormattedAnswer = ([nickname, type, places]): answer => ({
-  nickname,
-  type,
-  places,
-});
+const toFormattedAnswer = ([nickname, type, places]): answer => {
+  const keys = Object.keys(TRANSPORT_SELECTION);
+  return {
+    nickname,
+    type: keys.some(key => key === type) ? type : keys.find(key => TRANSPORT_SELECTION[key] === type ),
+    places
+  }
+}
 
 const globalConfig = {
   toFormattedAnswer,
