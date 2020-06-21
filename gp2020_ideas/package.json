@@ -1,12 +1,12 @@
 {
-  "name": "gp2020_equipment",
+  "name": "gp2020_ideas",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "update": "clasp version IDE && clasp push",
-    "push": "clasp push"
+    "push": "clasp push -f"
   },
   "keywords": [],
   "author": "",

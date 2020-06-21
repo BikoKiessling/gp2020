@@ -2,9 +2,9 @@
   "timeZone": "Europe/Paris",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "gp2020answerformatterlib",
-      "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
-      "version": "16",
+      "userSymbol": "gp2020updateparticipantlistlib",
+      "libraryId": "1hRuJFCH78neHQ_F0m9Ep1VEMUpszCxzYXZ1D2jXL--oZPLq-1gKhUQSz",
+      "version": "3",
       "developmentMode": true
     }, {
       "userSymbol": "gp2020zeltensheet",
@@ -12,9 +12,29 @@
       "version": "5",
       "developmentMode": true
     }, {
-      "userSymbol": "gp2020updateparticipantlistlib",
-      "libraryId": "1hRuJFCH78neHQ_F0m9Ep1VEMUpszCxzYXZ1D2jXL--oZPLq-1gKhUQSz",
-      "version": "3",
+      "userSymbol": "gp2020fahrgemeinschaftensheet",
+      "libraryId": "15ORM0AGijwtZChl_H7QAGPNM6NRiUiBpzoen5qNC_vgIE9v-2mhCu8Ww",
+      "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020answerformatterlib",
+      "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
+      "version": "16",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020ideas",
+      "libraryId": "1y4zCKfP24o_wBbejfLaM2rDH0iUXlm7l7nwnp2V8A8mTvvVhtu0WVpkS",
+      "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020workshopsheet",
+      "libraryId": "11-2pNdWHa4Txa-niy0hHVvRnllpp0GawgGAobtiyVKxhqiRh1vunohuy",
+      "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020equipment",
+      "libraryId": "1kd-ZR4YOd7Ugz9YSpb8fx8wDqC0s8QTB7kELvaV7EZiqHBgkwiPlIu7p",
+      "version": "1",
       "developmentMode": true
     }]
   },

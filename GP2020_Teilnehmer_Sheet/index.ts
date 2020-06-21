@@ -22,10 +22,17 @@ const onFormSubmit = (e) => {
   const formatAnswer = new gp2020answerformatterlib.FormatAnswer(answersSheet,participantsSheet,{toFormattedAnswer,answerSheetDataRange: ANSWERS_SHEET_DATARANGE, targetSheetDataRange: PARTICPANTIS_SHEET_DATARANGE,filterUndefinedByProperty: "dayOfArrival", identifyingProperty: "name", insertRowPolicy: {type: 'byColumnValue', answerProperty: 'name'},nrOfAnswerProperties: 5});
   formatAnswer.writeFormattedAnswerToSheet();
   gp2020updateparticipantlistlib.updateParticipantItemListOfForm({form,options: {alreadyAnsweredParticipants: {alreadyAnsweredParticipants: formatAnswer.getAnsweredParticipantsByIdentifyingProperty(), identifyingProperty: 'name'},onlyOneAnswerPerParticipantPolicy: true,}});
-  gp2020zeltensheet.updateParticipantList();
+  updateParticipantListOfOtherForms();
 
 };
 
+const updateParticipantListOfOtherForms = () =>{
+  gp2020zeltensheet.updateParticipantList();
+  gp2020fahrgemeinschaftensheet.updateParticipantList();
+  gp2020workshopsheet.updateParticipantList();
+  gp2020equipment.updateParticipantList();
+  gp2020ideas.updateParticipantList();
+}
 //if the nickname already exists, append identifyingName to avoid duplicate names
 const getValidNickname = (name: string,nickname: string, answers: any[][]): string =>
   nickname

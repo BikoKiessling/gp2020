@@ -17,7 +17,7 @@ class ObservingForm {
 }
 
 const observingForms: ObservingForm[] = [];
-const ITEM_TITLE = "Wer bist du?";
+  const ITEM_TITLE = "Wer bist du?";
 
 const getDataList = (observingForm: ObservingForm) => {
   switch (
@@ -34,12 +34,11 @@ const getDataList = (observingForm: ObservingForm) => {
 const updateParticipantItemListOfForm = (observingForm: ObservingForm) => {
   const listItem = getParticipantListItem(observingForm.form);
 
-  listItem.setRequired(true);
   let dataList = getDataList(observingForm);
   Logger.log(
-      'datalist:',
+    "datalist:",
     dataList,
-    'alreadyAnswered:',
+    "alreadyAnswered:",
     observingForm.options.alreadyAnsweredParticipants
       .alreadyAnsweredParticipants
   );

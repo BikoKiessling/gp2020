@@ -1,5 +1,5 @@
-const WORKSHOP_SPREADSHEET_ID = "1Yx_IHiQcnbkuFD6tu1WtXi5EqsaDtjzjlxIqzYodgYs";
-const ss = SpreadsheetApp.open(DriveApp.getFileById(WORKSHOP_SPREADSHEET_ID));
+const IDEAS_SPREADSHEET_ID = "1ZfguCCgmPMxn6s6ROrxbwNetSOG9FZbVcL_spAJXgP8";
+const ss = SpreadsheetApp.open(DriveApp.getFileById(IDEAS_SPREADSHEET_ID));
 
 const form = FormApp.openByUrl(ss.getFormUrl());
 

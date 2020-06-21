@@ -8,13 +8,7 @@ enum CAMPING_SELECTION {
   ETC = "Sonstiges (Hängematte (Rücksprache), Freiluft, Auto, etc.)",
 }
 
-class answer {
-  nickname: string;
-  type: CAMPING_SELECTION;
-  places?: number;
-}
-
-class formattedAnswer{
+class FormattedAnswer{
   nickname: string;
   type: string;
   places?: number;
@@ -36,7 +30,7 @@ const ANSWERS_SHEET_DATARANGE = "B2:D";
 const answersSheet = ss.getSheetByName(ANSWERS_SHEET_NAME);
 
 
-const toFormattedAnswer = ([nickname, type, places]): formattedAnswer => {
+const toFormattedAnswer = ([nickname, type, places]): FormattedAnswer => {
   const keys = Object.keys(CAMPING_SELECTION);
   return {
     nickname,
