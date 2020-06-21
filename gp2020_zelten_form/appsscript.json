@@ -1,0 +1,18 @@
+{
+  "timeZone": "Europe/Paris",
+  "dependencies": {
+    "libraries": [{
+      "userSymbol": "gp2020answerformatterlib",
+      "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
+      "version": "16",
+      "developmentMode": true
+    },{
+      "userSymbol": "gp2020updateparticipantlistlib",
+      "libraryId": "1hRuJFCH78neHQ_F0m9Ep1VEMUpszCxzYXZ1D2jXL--oZPLq-1gKhUQSz",
+      "version": "3",
+      "developmentMode": true
+    }]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}

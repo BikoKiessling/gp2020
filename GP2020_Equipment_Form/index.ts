@@ -70,7 +70,6 @@ const onFormSubmit = (e) => {
   updateParticipantList();
   setNeededEquipmentToEquipmentList();
   setMaxAmountToAmountList();
-  equipmentSheet.
 };
 
 const updateParticipantList = () => {
