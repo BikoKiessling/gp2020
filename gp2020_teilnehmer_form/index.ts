@@ -48,11 +48,13 @@ const onFormSubmit = (e) => {
 };
 
 const updateParticipantListOfOtherForms = () => {
+  gp2020musikvorschlaegeform.updateParticipantList();
   gp2020zeltenform.updateParticipantList();
+  gp2020ideasform.updateParticipantList();
   gp2020fahrgemeinschaftenform.updateParticipantList();
   gp2020workshopsform.updateParticipantList();
   gp2020equipmentform.updateParticipantList();
-  gp2020ideasform.updateParticipantList();
+  gp2020repaircafeform.updateParticipantList();
 };
 
 //formatted answers are those saved in the 'Teilnehmer' sheet

@@ -2,8 +2,8 @@
   "timeZone": "Europe/Paris",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "gp2020equipmentform",
-      "libraryId": "1OJUX-fkDz-r76paVDTHlCO_adGk0uH--7-U-2AV2usu8fQc9iTAFgUO-",
+      "userSymbol": "gp2020repaircafeform",
+      "libraryId": "1nRE6-WmHTw3JuhL1k12kR_xOh0-FcKEblkotnnK78eLlc3tl-meNv1jV",
       "version": "1",
       "developmentMode": true
     }, {
@@ -12,14 +12,13 @@
       "version": "13",
       "developmentMode": true
     }, {
-      "userSymbol": "gp2020workshopsform",
-      "libraryId": "1j2b6kt4mCYiLwa_VHdvxJ3ZYD8u5-625KUZ48yaGosTkwHTaxb_5qAnh",
-      "version": "1",
-      "developmentMode": true
+      "userSymbol": "gp2020musikvorschlaegeform",
+      "libraryId": "11Jb9T8-Nnz0FIex9mhyNf54c1O_1acDlMJJl5kTn-5ntPLObrb-oAtsO",
+      "version": "1"
     }, {
-      "userSymbol": "gp2020answerformatterlib",
-      "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
-      "version": "24",
+      "userSymbol": "gp2020fahrgemeinschaftenform",
+      "libraryId": "1eUOKySNknhPjkUGlWU5EfRbXNi3vNCw8h6JvfYtbp-VXh8vh-Pl3kwW2",
+      "version": "1",
       "developmentMode": true
     }, {
       "userSymbol": "gp2020ideasform",
@@ -32,9 +31,19 @@
       "version": "2",
       "developmentMode": true
     }, {
-      "userSymbol": "gp2020fahrgemeinschaftenform",
-      "libraryId": "1eUOKySNknhPjkUGlWU5EfRbXNi3vNCw8h6JvfYtbp-VXh8vh-Pl3kwW2",
+      "userSymbol": "gp2020workshopsform",
+      "libraryId": "1j2b6kt4mCYiLwa_VHdvxJ3ZYD8u5-625KUZ48yaGosTkwHTaxb_5qAnh",
       "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020equipmentform",
+      "libraryId": "1OJUX-fkDz-r76paVDTHlCO_adGk0uH--7-U-2AV2usu8fQc9iTAFgUO-",
+      "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020answerformatterlib",
+      "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
+      "version": "24",
       "developmentMode": true
     }]
   },
