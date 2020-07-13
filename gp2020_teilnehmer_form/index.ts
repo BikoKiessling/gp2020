@@ -55,6 +55,7 @@ const updateParticipantListOfOtherForms = () => {
   gp2020workshopsform.updateParticipantList();
   gp2020equipmentform.updateParticipantList();
   gp2020repaircafeform.updateParticipantList();
+  gp2020feedbackform.updateParticipantList();
 };
 
 //formatted answers are those saved in the 'Teilnehmer' sheet

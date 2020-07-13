@@ -2,8 +2,8 @@
   "timeZone": "Europe/Paris",
   "dependencies": {
     "libraries": [{
-      "userSymbol": "gp2020repaircafeform",
-      "libraryId": "1nRE6-WmHTw3JuhL1k12kR_xOh0-FcKEblkotnnK78eLlc3tl-meNv1jV",
+      "userSymbol": "gp2020musikvorschlaegeform",
+      "libraryId": "11Jb9T8-Nnz0FIex9mhyNf54c1O_1acDlMJJl5kTn-5ntPLObrb-oAtsO",
       "version": "1",
       "developmentMode": true
     }, {
@@ -12,23 +12,14 @@
       "version": "13",
       "developmentMode": true
     }, {
-      "userSymbol": "gp2020musikvorschlaegeform",
-      "libraryId": "11Jb9T8-Nnz0FIex9mhyNf54c1O_1acDlMJJl5kTn-5ntPLObrb-oAtsO",
-      "version": "1"
-    }, {
-      "userSymbol": "gp2020fahrgemeinschaftenform",
-      "libraryId": "1eUOKySNknhPjkUGlWU5EfRbXNi3vNCw8h6JvfYtbp-VXh8vh-Pl3kwW2",
+      "userSymbol": "gp2020repaircafeform",
+      "libraryId": "1nRE6-WmHTw3JuhL1k12kR_xOh0-FcKEblkotnnK78eLlc3tl-meNv1jV",
       "version": "1",
       "developmentMode": true
     }, {
-      "userSymbol": "gp2020ideasform",
-      "libraryId": "1y49C3eTi3abZ0r3AhKtl9dZN8chWIFrgFhBFJpCJlyJ8sDVUxqXAAkTM",
+      "userSymbol": "gp2020feedbackform",
+      "libraryId": "1QLBQFpitaVK0tDwVwJuKyoU-4bEHCWKQS-thEGOmxTFuqXruQM7xQmnL",
       "version": "1",
-      "developmentMode": true
-    }, {
-      "userSymbol": "gp2020zeltenform",
-      "libraryId": "1yfBzVtNwDuHZ4nsbSBxThahCXuI-Fk4KcxrITPe0A5Bji4iky-v4dvw5",
-      "version": "2",
       "developmentMode": true
     }, {
       "userSymbol": "gp2020workshopsform",
@@ -44,6 +35,21 @@
       "userSymbol": "gp2020answerformatterlib",
       "libraryId": "17caEzx3u4AnFvgXNHdQReKYjlUBeazYItIsUPciDYvgxO1Up7JisbWS_",
       "version": "24",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020fahrgemeinschaftenform",
+      "libraryId": "1eUOKySNknhPjkUGlWU5EfRbXNi3vNCw8h6JvfYtbp-VXh8vh-Pl3kwW2",
+      "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020ideasform",
+      "libraryId": "1y49C3eTi3abZ0r3AhKtl9dZN8chWIFrgFhBFJpCJlyJ8sDVUxqXAAkTM",
+      "version": "1",
+      "developmentMode": true
+    }, {
+      "userSymbol": "gp2020zeltenform",
+      "libraryId": "1yfBzVtNwDuHZ4nsbSBxThahCXuI-Fk4KcxrITPe0A5Bji4iky-v4dvw5",
+      "version": "2",
       "developmentMode": true
     }]
   },
