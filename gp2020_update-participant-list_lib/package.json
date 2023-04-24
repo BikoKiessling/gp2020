@@ -16,6 +16,6 @@
     "prettier": "^2.0.5"
   },
   "devDependencies": {
-    "husky": "^4.2.5"
+    "husky": "^8.0.3"
   }
 }
